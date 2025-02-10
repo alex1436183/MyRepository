@@ -9,7 +9,13 @@ pipeline {
             }
         }
 
-        stage('Check Files') {
+        stage('Archive Files') {
+            steps {
+                sh 'zip -r archive.zip *'
+            }
+        }
+
+        stage('Check Workspace') {
             steps {
                 sh 'ls -la'
             }
