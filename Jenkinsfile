@@ -9,20 +9,19 @@ pipeline {
             }
         }
 
-        stage('Install zip (if needed)') {
+        stage('Check and Install zip') {
             steps {
                 sh '''
                     if ! command -v zip &> /dev/null; then
-                        echo "Installing zip..."
+                        echo "zip not found. Installing..."
                         if [ -f /etc/debian_version ]; then
-                            apt update && apt install -y zip
+                            sudo apt update && sudo apt install -y zip || true
                         elif [ -f /etc/redhat-release ]; then
-                            yum install -y zip
+                            sudo yum install -y zip || true
                         elif [ -f /etc/alpine-release ]; then
-                            apk add zip
+                            sudo apk add zip || true
                         else
-                            echo "Unsupported OS"
-                            exit 1
+                            echo "Unsupported OS. Skipping zip installation."
                         fi
                     else
                         echo "zip is already installed"
