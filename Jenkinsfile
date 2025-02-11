@@ -1,24 +1,31 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Checkout') {
             steps {
-                cleanWs() 
-                checkout scm
+                cleanWs()
+                git branch: 'main', url: 'https://github.com/user/repo.git'
             }
         }
-
-        stage('Archive Files') {
+        stage('Build') {
             steps {
-                sh 'zip -r archive.zip *'
+                sh './gradlew build' // Зависит от вашего сборщика (Maven, Gradle, NPM и т. д.)
             }
         }
-
-        stage('Check Workspace') {
+        stage('Test') {
             steps {
-                sh 'ls -lah'
+                sh './gradlew test' // Команда запуска тестов
             }
         }
     }
+    post {
+        success {
+            echo 'Build successful'
+        }
+        failure {
+            echo 'Build failed'
+        }
+    }
 }
+
