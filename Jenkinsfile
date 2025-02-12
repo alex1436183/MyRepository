@@ -1,30 +1,34 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
-                cleanWs()
-                git branch: 'main', url: 'https://github.com/user/repo.git'
+                git 'https://github.com/alex1436183/MyRepository.git'  // Репозиторий, из которого будет загружаться код
             }
         }
-        stage('Build') {
+        stage('Run Script') {
             steps {
-                sh './gradlew build' // Зависит от вашего сборщика (Maven, Gradle, NPM и т. д.)
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './gradlew test' // Команда запуска тестов
+                script {
+                    // Запуск твоего Python скрипта
+                    sh 'python tiner.py'
+                }
             }
         }
     }
+
     post {
+        always {
+            // Это всегда будет выполняться после выполнения пайплайна (например, для очистки)
+            echo 'Build finished'
+        }
         success {
-            echo 'Build successful'
+            // Сообщение при успешной сборке
+            echo 'Build was successful!'
         }
         failure {
-            echo 'Build failed'
+            // Сообщение при ошибке сборки
+            echo 'Build failed!'
         }
     }
 }
