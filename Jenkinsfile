@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                 cleanWs()
                 git 'https://github.com/alex1436183/MyRepository.git'  // Репозиторий, из которого будет загружаться код
             }
         }
