@@ -1,0 +1,7 @@
+
+[staging_server]
+
+ubuntu1 ansible_host=192.168.1.210 ansible_user=avl ansible_ssh_private_key_file=~/.ssh/id_rsa 
+ubuntu1 ansible_python_interpreter=/usr/bin/python3.12
+
+

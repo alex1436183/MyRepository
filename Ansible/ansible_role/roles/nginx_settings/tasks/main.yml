@@ -1,0 +1,40 @@
+---
+- name: Install Nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+
+- name: Ensure Nginx is started and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ application_path }}"
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: Deploy index.html
+  ansible.builtin.copy:
+    src: index.html
+    dest: "{{ application_path }}/index.html"
+    owner: www-data
+    group: www-data
+
+- name: Deploy 1.jpg
+  ansible.builtin.copy:
+    src: 1.jpg
+    dest: "{{ application_path }}/1.jpg"
+    owner: www-data
+    group: www-data
+
+- name: Deploy Nginx configuration
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-aap
+  namespace: red
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: http-aap
+  template:
+    metadata:
+      labels:
+        app: http-aap
+    spec:
+      containers:
+      - name: http-aap
+        image: alex1436183/http-app
+        ports:
+        - containerPort: 5050

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu
+  namespace: blue
+  labels:
+    app: ubuntu
+spec:
+  serviceAccountName: blue-sa
+  containers:
+    - name: ubuntu
+      image: ubuntu
+      command: ["/bin/bash", "-c", "sleep infinity"]
+      tty: true
+      stdin: true

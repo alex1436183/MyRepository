@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-aap
+  labels: 
+    app: my-aap
+  namespace: blue
+spec:
+  serviceAccountName: blue-sa
+
+  containers:
+    - name: my-aap
+      image: alex1436183/my-app
+      ports:
+        - containerPort: 5000
+      volumeMounts:
+        - name: app-storage
+          mountPath: /app/static
+
+  volumes:
+    - name: app-storage
+      persistentVolumeClaim:
+        claimName: local-pvc
