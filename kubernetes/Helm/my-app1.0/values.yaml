@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: alex1436183/my-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: my-app-service
+  type: LoadBalancer       
+  port: 5001
+  targetPort: 5000
+
+
+  
